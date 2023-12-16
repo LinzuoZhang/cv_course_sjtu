@@ -1,4 +1,8 @@
 ## sjtu_cv_course_homework
+#### 更新说明
+1. 加入lr_scheduler
+2. 重构dataloador
+3. 加大epoch数量
 #### 介绍
 上海交通大学2023年秋季课程--基于深度学习的计算机视觉课程大作业
 #### 作业要求

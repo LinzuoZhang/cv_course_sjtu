@@ -7,6 +7,8 @@ def non_max_suppression(boxes, scores, iou_threshold):
     boxes = np.array(boxes)
     while len(selected_indices) > 0:
         current_index = selected_indices[0]
+        if scores[current_index] < 0.8:
+            break
         index_record.append(current_index)
 
         current_box = boxes[current_index]
@@ -67,7 +69,7 @@ def calculate_map(ground_truth, predictions, iou_threshold=0.5):
     # 初始化
     average_precisions = []
 
-    for class_label in range(20):
+    for class_label in range(6):
         # 获取指定类别的真实标签和预测结果
         true_positives = []
         false_positives = []

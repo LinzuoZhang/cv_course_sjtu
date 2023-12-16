@@ -26,7 +26,7 @@ done
 echo "Backing up to log dir: $OUTPUT_DIR"
 cp -r $1 train_homework2.py $OUTPUT_DIR
 cp -r rcnn_model.py $OUTPUT_DIR
-cp -r hw2_data_loador.py $OUTPUT_DIR
+cp -r hw2_dataloador.py $OUTPUT_DIR
 echo " ...Done"
 
 

@@ -8,7 +8,7 @@ from torchvision.models.detection.rpn import AnchorGenerator
 
 def build_torchvision_model(device, use_tv_boxpredictor=True):
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
-    num_classes = 21  # 1 class (wheat) + background
+    num_classes = 6  # 1 class (wheat) + background
 
     # get number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
@@ -54,22 +54,11 @@ class DetectionHeadChatGPT(nn.Module):
 class DetectionHead(nn.Module):
     def __init__(self, in_channels, num_classes):
         super(DetectionHead, self).__init__()
-        self.dropout1 = nn.Dropout(0.5)
-        self.dropout2 = nn.Dropout(0.5)
-        self.fc1 = nn.Linear(in_channels, 4096)
-        self.fc2 = nn.Linear(4096, 4096)
-        self.cls_score = nn.Linear(4096, num_classes)
-        self.bbox_pred = nn.Linear(4096, 4 * num_classes)
+
+        self.cls_score = nn.Linear(in_channels, num_classes)
+        self.bbox_pred = nn.Linear(in_channels, 4 * num_classes)
 
     def forward(self, x):
-        # RoI pooling
-
-        # Fully connected layers
-        x = torch.nn.functional.relu(self.fc1(x))
-        x = self.dropout1(x)
-        x = torch.nn.functional.relu(self.fc2(x))
-        x = self.dropout2(x)
-        # Classification scores
         cls_score = self.cls_score(x)
         # Bounding box regression predictions
         bbox_pred = self.bbox_pred(x)
